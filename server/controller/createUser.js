@@ -2,24 +2,31 @@ const User = require("../models/User");
 
 exports.createUser = async (req, res) => {
   try {
-    console.log("req body", req.body);
-    const { name, email, title, department, role } = req.body;
-    if (!name || !email || !title || !role || !department) {
-      console.log("not all fields...");
-      return res.status(400).json({
-        status: 400,
-        message: "Please fill all fields",
-      });
-    }
-    const user = await User.create({
-      name,
+    const {
+      firstName,
+      lastName,
       email,
-      title,
-      department,
-      role,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
+      country,
+      state,
+      city,
+      gender,
+      dob,
+      age,
+    } = req.body;
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      country,
+      state,
+      city,
+      gender,
+      dob,
+      age,
     });
-    return res.status(200).json({
+
+    return res.status(201).json({
       status: 201,
       message: "User created successfully",
       data: user,
